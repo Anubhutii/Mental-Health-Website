@@ -3,14 +3,10 @@ import logo from "../assets/Logo.png";
 import { HiMenu, HiX } from "react-icons/hi";
 import ThemeToggle from "./ThemeToggle";
 
-import {
-  FaHome,
-  FaUserAlt,
-  FaVial,
-  FaEnvelope,
-} from "react-icons/fa";
+import { FaHome, FaUserAlt, FaVial, FaEnvelope } from "react-icons/fa";
 
 import { useTheme } from "../Context/ThemeProvider";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,7 +14,7 @@ const Navbar = () => {
 
   const { theme, toggleTheme } = useTheme();
   const [showLabel, setShowLabel] = useState(false);
-
+  const navigate = useNavigate();
   const navLinks = [
     { name: "home", icon: <FaHome /> },
     { name: "about", icon: <FaUserAlt /> },
@@ -70,33 +66,35 @@ const Navbar = () => {
 
         {/* Right Section */}
         <div className="hidden md:flex items-center gap-6">
-           {/* Theme Toggle */}
-        <div className="hidden md:flex items-center ">
+          {/* Theme Toggle */}
+          <div className="hidden md:flex items-center ">
             <ThemeToggle />
           </div>
           {/* Login Button */}
-          <button className="relative h-8 px-6  rounded-lg bg-gradient-to-r from-[#43C6F1] via-[#34a9bd] to-[#1D94D0] text-white font-semibold shadow-md transform hover:scale-105 transition-all duration-300 group">
+          <button
+            onClick={() => navigate("/login")}
+            className="relative h-8 px-6  rounded-lg bg-gradient-to-r from-[#43C6F1] via-[#34a9bd] to-[#1D94D0] text-white font-semibold shadow-md transform hover:scale-105 transition-all duration-300 group"
+          >
             <span className="relative z-10">Log in</span>
             <span className="absolute inset-0 m-1 rounded-md border-2 border-white opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"></span>
           </button>
-
-         
-         
         </div>
 
         {/* Mobile Hamburger + Login */}
         <div className="md:hidden flex items-center gap-3">
-        <div className="flex justify-center   ">
+          <div className="flex justify-center   ">
             <ThemeToggle />
           </div>
-          <button className="px-4 py-1.5 rounded-md text-sm bg-gradient-to-r from-[#43C6F1] via-[#34a9bd] to-[#1D94D0] text-white font-semibold shadow-md">
+          <button
+            onClick={() => navigate("/login")}
+            className="px-4 py-1.5 rounded-md text-sm bg-gradient-to-r from-[#43C6F1] via-[#34a9bd] to-[#1D94D0] text-white font-semibold shadow-md"
+          >
             Log in
           </button>
           <button onClick={toggleMenu} className="text-gray-700">
             {isMenuOpen ? <HiX size={30} /> : <HiMenu size={30} />}
           </button>
           {/* Inside Navbar Mobile Dropdown */}
-          
         </div>
       </div>
 

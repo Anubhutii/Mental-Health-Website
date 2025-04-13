@@ -1,26 +1,39 @@
-import React from 'react'
-import './App.css'
-import Navbar from './Components/Navbar'
-import Home from './Pages/Home'
-import About from './Pages/About'
-import FAQs from './Pages/FAQs'
-import Services from './Pages/Services'
-import Feedback from './Pages/Feedback'
-import Footer from './Pages/Footer'
+import React from "react";
+import "./App.css";
+import Navbar from "./Components/Navbar";
+import Home from "./Pages/Home";
+import LoginPage from "./Pages/LoginPage";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 
-function App() {
+function AppWrapper() {
+  const location = useLocation();
+
+  // Define the routes where navbar should be hidden
+  const hideNavbarRoutes = ["/login"];
+  const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
   return (
     <>
-      <Navbar />
-      <Home />
-      <About />
-      <FAQs />
-      <Services />
-      <Feedback />
-      <Footer />
+      {!shouldHideNavbar && <Navbar />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+function App() {
+  return (
+    <Router>
+      <AppWrapper />
+    </Router>
+  );
+}
+
+export default App;
