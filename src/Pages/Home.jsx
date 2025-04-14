@@ -6,9 +6,17 @@ import Feedback from "./Feedback";
 import Services from "./Services";
 import Footer from "./Footer";
 
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+
+
 const Home = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
+
+  const navigate = useNavigate(); // Initialize useNavigate
+  const handleStartTest = () => {
+    navigate("/startTest"); // Navigate to the General Test page
+  };
 
   const categories = [
     "Student",
@@ -66,7 +74,7 @@ const Home = () => {
           </p>
 
           <div className="flex flex-col items-start space-y-3 relative">
-            <button
+            <button onClick={handleStartTest}
               className={`px-8 py-3 rounded-md border-2 border-[#0d86b6] 
     ${theme === "dark" ? "text-gray-300" : "text-gray-500"} 
     hover:bg-[#137CA4] hover:text-white font-semibold transition duration-300`}

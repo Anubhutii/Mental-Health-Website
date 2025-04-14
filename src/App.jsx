@@ -9,6 +9,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
+import GeneralTextPage from "./Pages/GeneralTextPage";
 
 function AppWrapper() {
   const location = useLocation();
@@ -22,6 +23,7 @@ function AppWrapper() {
       {!shouldHideNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/startTest" element={<GeneralTextPage /> } />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
     </>

@@ -4,21 +4,29 @@ import Lottie from "lottie-react";
 import loginAnimation from "../assets/Login.json";
 import bgAnimation from "../assets/loginBg1.json";
 import { FcGoogle } from "react-icons/fc";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-// Login form component
-const LoginForm = ({ onSubmit, onSwitchToRegister }) => {
+// Login Form Component
+const LoginForm = ({ onSubmit, onSwitchToRegister, formData, setFormData }) => {
   return (
-    <div className="p-10 md:p-14 flex flex-col justify-center">
-      <h2 className="text-3xl font-bold text-gray-800 mb-2">Hello Again 💫</h2>
+    <div className="p-6 sm:p-10 md:p-14 flex flex-col justify-center">
+      <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
+        Hello Again 💫
+      </h2>
       <p className="text-gray-600 mb-6">
         Let's take care of your beautiful mind
       </p>
 
-      <form className="space-y-5" onSubmit={onSubmit}>
+      <form className="space-y-4 sm:space-y-5" onSubmit={onSubmit}>
         <div>
           <label className="text-sm text-gray-700">Email</label>
           <input
             type="email"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             placeholder="you@example.com"
             className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-300"
           />
@@ -28,16 +36,16 @@ const LoginForm = ({ onSubmit, onSwitchToRegister }) => {
           <label className="text-sm text-gray-700">Password</label>
           <input
             type="password"
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
             placeholder="••••••••"
             className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-300"
           />
         </div>
 
         <div className="flex justify-between text-sm">
-          {/* <label className="flex items-center">
-            <input type="checkbox" className="mr-2" />
-            Remember me
-          </label> */}
           <a href="#" className="text-blue-800 hover:underline">
             Forgot password?
           </a>
@@ -64,21 +72,27 @@ const LoginForm = ({ onSubmit, onSwitchToRegister }) => {
   );
 };
 
-// Register form component
-const RegisterForm = ({ onSubmit, onSwitchToLogin }) => {
+// Register Form Component
+const RegisterForm = ({ onSubmit, onSwitchToLogin, formData, setFormData }) => {
   return (
-    <div className="p-10 md:p-14 flex flex-col justify-center">
-      <h2 className="text-3xl font-bold text-gray-800 mb-2">Welcome 🌟</h2>
+    <div className="p-6 sm:p-10 md:p-14 flex flex-col justify-center">
+      <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
+        Welcome 🌟
+      </h2>
       <p className="text-gray-600 mb-6">Let's create your account</p>
 
       <form
-        className="grid grid-cols-1 md:grid-cols-2 gap-5"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5"
         onSubmit={onSubmit}
       >
         <div>
           <label className="text-sm text-gray-700">Username</label>
           <input
             type="text"
+            value={formData.username}
+            onChange={(e) =>
+              setFormData({ ...formData, username: e.target.value })
+            }
             placeholder="Enter your name"
             className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
           />
@@ -88,6 +102,10 @@ const RegisterForm = ({ onSubmit, onSwitchToLogin }) => {
           <label className="text-sm text-gray-700">Email</label>
           <input
             type="email"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             placeholder="you@example.com"
             className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
           />
@@ -97,6 +115,10 @@ const RegisterForm = ({ onSubmit, onSwitchToLogin }) => {
           <label className="text-sm text-gray-700">Password</label>
           <input
             type="password"
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
             placeholder="••••••••"
             className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
           />
@@ -106,12 +128,16 @@ const RegisterForm = ({ onSubmit, onSwitchToLogin }) => {
           <label className="text-sm text-gray-700">Confirm Password</label>
           <input
             type="password"
+            value={formData.confirmPassword}
+            onChange={(e) =>
+              setFormData({ ...formData, confirmPassword: e.target.value })
+            }
             placeholder="••••••••"
             className="w-full mt-1 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
           />
         </div>
 
-        <div className="flex col-span-2 justify-center text-sm w-full">
+        <div className="flex col-span-1 sm:col-span-2 justify-center text-sm w-full">
           <a
             href="#"
             className="text-blue-800 hover:underline flex items-center gap-2"
@@ -120,7 +146,7 @@ const RegisterForm = ({ onSubmit, onSwitchToLogin }) => {
           </a>
         </div>
 
-        <div className="md:col-span-2">
+        <div className="col-span-1 sm:col-span-2">
           <button
             type="submit"
             className="w-full bg-blue-800 hover:bg-blue-600 text-white py-3 rounded-xl transition-all"
@@ -143,25 +169,68 @@ const RegisterForm = ({ onSubmit, onSwitchToLogin }) => {
   );
 };
 
+// LoginPage Component
 const LoginPage = () => {
   const [isRegister, setIsRegister] = useState(false);
-  const formsContainerRef = useRef(null);
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  const handleLoginSubmit = (e) => {
+  const formsContainerRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    alert("Login form submitted!");
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/login", {
+        email: formData.email,
+        password: formData.password,
+      });
+
+      const { user, token, message } = res.data;
+
+      if (user) {
+        alert(`Login successful! Welcome ${user.username}`);
+        navigate("/");
+      } else {
+        alert(message || "Login failed!");
+      }
+    } catch (error) {
+      alert(
+        "Login failed: " + (error.response?.data?.message || error.message)
+      );
+    }
   };
 
-  const handleRegisterSubmit = (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-    alert("Register form submitted!");
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/register", {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
+      alert("Registration successful!");
+      switchToLogin();
+    } catch (error) {
+      alert(
+        "Registration failed: " +
+          (error.response?.data?.message || error.message)
+      );
+    }
   };
 
   const switchToRegister = () => {
-    // Add animation class
     if (formsContainerRef.current) {
       formsContainerRef.current.classList.add("slide-up");
-      // Wait for animation to complete before changing state
       setTimeout(() => {
         setIsRegister(true);
         formsContainerRef.current.classList.remove("slide-up");
@@ -170,10 +239,8 @@ const LoginPage = () => {
   };
 
   const switchToLogin = () => {
-    // Add animation class
     if (formsContainerRef.current) {
       formsContainerRef.current.classList.add("slide-down");
-      // Wait for animation to complete before changing state
       setTimeout(() => {
         setIsRegister(false);
         formsContainerRef.current.classList.remove("slide-down");
@@ -182,51 +249,47 @@ const LoginPage = () => {
   };
 
   return (
-    <>
-      {/* Required CSS for animations - add this to your CSS file */}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-pink-100 via-blue-100 to-purple-100 relative overflow-hidden px-4">
+      <Lottie
+        animationData={bgAnimation}
+        loop
+        autoplay
+        className="absolute top-0 w-full h-auto object-cover z-0 opacity-40 pointer-events-none"
+      />
+      <div className="absolute top-[-100px] left-[-100px] w-[300px] h-[300px] rounded-full bg-pink-300 opacity-30 mix-blend-multiply filter blur-3xl animate-blob"></div>
+      <div className="absolute top-20 right-[-100px] w-[300px] h-[300px] rounded-full bg-purple-300 opacity-30 mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+      <div className="absolute bottom-[-100px] left-1/3 w-[300px] h-[300px] rounded-full bg-blue-300 opacity-30 mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
 
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-pink-100 via-blue-100 to-purple-100 relative overflow-hidden">
-        {/* Background animation */}
-        <Lottie
-          animationData={bgAnimation}
-          loop
-          autoplay
-          className="absolute bg-amber-200 top-0 w-full h-auto object-cover z-0 opacity-40 pointer-events-none"
-        />
+      <div className="z-10 w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden">
+        {/* Left side animation for desktop only */}
+        <div className="hidden md:flex items-center justify-center p-8 bg-white/20">
+          <Lottie
+            animationData={loginAnimation}
+            loop
+            className="w-full max-w-[350px]"
+          />
+        </div>
 
-        {/* Blobs */}
-        <div className="absolute top-[-100px] left-[-100px] w-[300px] h-[300px] rounded-full bg-pink-300 opacity-30 mix-blend-multiply filter blur-3xl animate-blob"></div>
-        <div className="absolute top-20 right-[-100px] w-[300px] h-[300px] rounded-full bg-purple-300 opacity-30 mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-[-100px] left-1/3 w-[300px] h-[300px] rounded-full bg-blue-300 opacity-30 mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
-
-        {/* Box */}
-        <div className="z-10 w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden">
-          {/* Left Animation */}
-          <div className="hidden md:flex items-center justify-center p-8 bg-white/20">
-            <Lottie
-              animationData={loginAnimation}
-              loop={true}
-              className="w-full max-w-[350px]"
+        {/* Right side form */}
+        <div ref={formsContainerRef} className="transition-all duration-500">
+          {isRegister ? (
+            <RegisterForm
+              onSubmit={handleRegisterSubmit}
+              onSwitchToLogin={switchToLogin}
+              formData={formData}
+              setFormData={setFormData}
             />
-          </div>
-
-          {/* Right Form - with animation container */}
-          <div ref={formsContainerRef} className="transition-all duration-500">
-            {isRegister ? (
-              <RegisterForm
-                onSubmit={handleRegisterSubmit}
-                onSwitchToLogin={switchToLogin}
-              />
-            ) : (
-              <LoginForm
-                onSubmit={handleLoginSubmit}
-                onSwitchToRegister={switchToRegister}
-              />
-            )}
-          </div>
+          ) : (
+            <LoginForm
+              onSubmit={handleLoginSubmit}
+              onSwitchToRegister={switchToRegister}
+              formData={formData}
+              setFormData={setFormData}
+            />
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
