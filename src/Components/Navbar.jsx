@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import logo from "../assets/Logo.png";
 import { HiMenu, HiX } from "react-icons/hi";
 import ThemeToggle from "./ThemeToggle";
 import { FaHome, FaUserAlt, FaVial, FaEnvelope } from "react-icons/fa";
 import { useTheme } from "../Context/ThemeProvider";
 import { useNavigate } from "react-router-dom";
-
+import ProfileCard from "./profileCard";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileCardVisible, setIsProfileCardVisible] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const { theme, toggleTheme } = useTheme();
-  const [showLabel, setShowLabel] = useState(false);
+  const { theme } = useTheme();
   const navigate = useNavigate();
 
+  const user = sessionStorage.getItem("user");
+  const isUserLoggedIn = user !== null;
 
   const navLinks = [
     { name: "home", icon: <FaHome /> },
@@ -23,16 +25,8 @@ const Navbar = () => {
     { name: "Feedback", icon: <FaEnvelope /> },
   ];
 
-  useEffect(() => {
-    let timer;
-    if (showLabel) {
-      timer = setTimeout(() => {
-        setShowLabel(false);
-      }, 3000); // hide after 3 seconds
-    }
-    return () => clearTimeout(timer);
-  }, [showLabel]);
-
+  const userName = user ? JSON.parse(user).username : null;
+  console.log(userName);
 
   return (
     <div
@@ -63,41 +57,56 @@ const Navbar = () => {
         </div>
 
         {/* Right Section */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="flex items-center md:gap-6 gap-3 ">
           {/* Theme Toggle */}
-          <div className="hidden md:flex items-center">
+          <div className="flex items-center">
             <ThemeToggle />
           </div>
 
-          {/* Login Button or Profile Image */}
-          
+          {/* Login Button or Profile Initial Circle */}
+          {isUserLoggedIn ? (
+            <div className="relative">
+              <div
+                className="h-10 w-10 flex items-center justify-center rounded-full bg-gradient-to-r from-[#43C6F1] to-[#1D94D0] text-white text-lg font-semibold cursor-pointer"
+                onClick={() => setIsProfileCardVisible(!isProfileCardVisible)}
+              >
+                {userName?.charAt(0).toUpperCase()}
+              </div>
+              {isProfileCardVisible && (
+                <div
+                  className="absolute top-14 right-0 z-10"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <ProfileCard />
+                </div>
+              )}
+            </div>
+          ) : (
             <button
               onClick={() => navigate("/login")}
-              className="relative h-8 px-6  rounded-lg bg-gradient-to-r from-[#43C6F1] via-[#34a9bd] to-[#1D94D0] text-white font-semibold shadow-md transform hover:scale-105 transition-all duration-300 group"
+              className="relative h-8 px-2 md:px-4 rounded-lg bg-gradient-to-r from-[#43C6F1] via-[#34a9bd] to-[#1D94D0] text-white font-semibold shadow-md transform hover:scale-105 transition-all duration-300 group"
             >
-              <span className="relative z-10">Log in</span>
+              <span className="relative z-10 ">Log in</span>
               <span className="absolute inset-0 m-1 rounded-md border-2 border-white opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"></span>
             </button>
-        </div>
+          )}
 
-        {/* Mobile Hamburger + Login */}
-        <div className="md:hidden flex items-center gap-3">
-          <div className="flex justify-center">
-            <ThemeToggle />
-          </div>
-          
-            <button
-              onClick={() => navigate("/login")}
-              className="px-4 py-1.5 rounded-md text-sm bg-gradient-to-r from-[#43C6F1] via-[#34a9bd] to-[#1D94D0] text-white font-semibold shadow-md"
-            >
-              Log in
-            </button>
-          
-          <button onClick={toggleMenu} className="text-gray-700">
+          <button
+            onClick={toggleMenu}
+            className=" md:hidden flex text-gray-700"
+          >
             {isMenuOpen ? <HiX size={30} /> : <HiMenu size={30} />}
           </button>
         </div>
       </div>
+
+      {/* Overlay to close profile card when clicked outside */}
+      {isProfileCardVisible && (
+        <div
+          className="fixed inset-0 z-0"
+          onClick={() => setIsProfileCardVisible(false)}
+        ></div>
+      )}
 
       {/* Mobile Dropdown Menu */}
       {isMenuOpen && (
@@ -109,9 +118,7 @@ const Navbar = () => {
                 href={`#${name}`}
                 className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-gradient-to-r hover:from-[#e0f7ff] hover:to-[#ccf1ff] hover:text-[#1D94D0] transition-all duration-300 hover:scale-[1.02]"
               >
-                <span className="text-lg transition-transform duration-300 group-hover:rotate-6">
-                  {icon}
-                </span>
+                <span className="text-lg">{icon}</span>
                 <span className="text-base font-semibold capitalize">
                   {name}
                 </span>

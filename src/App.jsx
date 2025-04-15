@@ -15,7 +15,7 @@ function AppWrapper() {
   const location = useLocation();
 
   // Define the routes where navbar should be hidden
-  const hideNavbarRoutes = ["/login"];
+  const hideNavbarRoutes = ["/login", "/startTest"];
   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
   return (
@@ -23,7 +23,7 @@ function AppWrapper() {
       {!shouldHideNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/startTest" element={<GeneralTextPage /> } />
+        <Route path="/startTest" element={<GeneralTextPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
     </>

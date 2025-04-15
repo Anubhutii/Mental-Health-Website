@@ -92,7 +92,7 @@ const GeneralTextPage = () => {
       <div className="absolute inset-0 bg-opacity-10 z-0" />
 
       {/* Main content */}
-      <div className="relative max-w-6xl w-full mt-20 flex flex-col md:flex-row gap-10 items-center justify-between bg-white/30 dark:bg-white/10 backdrop-blur-md shadow-xl rounded-2xl p-8">
+      <div className="relative max-w-6xl w-full  flex flex-col md:flex-row gap-10 items-center justify-between bg-white/30 dark:bg-white/10 backdrop-blur-md shadow-xl rounded-2xl p-8">
         {/* Left: Image */}
         <div className="w-full md:w-[60%] flex justify-center items-center mb-6 md:mb-0">
           <img

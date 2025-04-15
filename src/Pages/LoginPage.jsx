@@ -193,7 +193,8 @@ const LoginPage = () => {
       const { user, token, message } = res.data;
 
       if (user) {
-        alert(`Login successful! Welcome ${user.username}`);
+        sessionStorage.setItem("user", JSON.stringify(user));
+        sessionStorage.setItem("token", token);
         navigate("/");
       } else {
         alert(message || "Login failed!");
