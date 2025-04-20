@@ -6,6 +6,7 @@ import { FaHome, FaUserAlt, FaVial, FaEnvelope } from "react-icons/fa";
 import { useTheme } from "../Context/ThemeProvider";
 import { useNavigate } from "react-router-dom";
 import ProfileCard from "./profileCard";
+import { MdDashboard } from "react-icons/md";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -65,7 +66,12 @@ const Navbar = () => {
 
           {/* Login Button or Profile Initial Circle */}
           {isUserLoggedIn ? (
-            <div className="relative">
+            <div className="flex items-center gap-4">
+              <div onClick={() => navigate("/dashboard")}>
+                <MdDashboard size={30} />
+                
+              </div>
+
               <div
                 className="h-10 w-10 flex items-center justify-center rounded-full bg-gradient-to-r from-[#43C6F1] to-[#1D94D0] text-white text-lg font-semibold cursor-pointer"
                 onClick={() => setIsProfileCardVisible(!isProfileCardVisible)}

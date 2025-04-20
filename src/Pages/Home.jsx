@@ -115,7 +115,7 @@ const Home = () => {
                           setIsHovered(false);
                           console.log("Selected:", category);
                         }}
-                        className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-200 cursor-pointer text-sm text-gray-700 dark:text-gray-700 font-semibold"
+                        className="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer text-sm text-gray-700 dark:text-gray-400 font-semibold"
                       >
                         {category}
                       </li>
@@ -128,7 +128,7 @@ const Home = () => {
             {selectedCategory && (
               <p
                 className={`text-sm ml-2 ${
-                  theme === "dark" ? "text-gray-300" : "text-gray-500"
+                  theme === "dark" ? "text-gray-500" : "text-gray-500"
                 }`}
               >
                 Selected: {selectedCategory}

@@ -10,12 +10,13 @@ import {
   useLocation,
 } from "react-router-dom";
 import GeneralTextPage from "./Pages/GeneralTextPage";
+import Dashboard from "./Pages/Dashboard";
 
 function AppWrapper() {
   const location = useLocation();
 
   // Define the routes where navbar should be hidden
-  const hideNavbarRoutes = ["/login", "/startTest"];
+  const hideNavbarRoutes = ["/login", "/startTest", "/dashboard"];
   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
   return (
@@ -25,6 +26,7 @@ function AppWrapper() {
         <Route path="/" element={<Home />} />
         <Route path="/startTest" element={<GeneralTextPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </>
   );
